@@ -1,0 +1,64 @@
+/*
+Query shows all products sold through Rogue Fitness and their prices and sorted by product price.
+Satisfies: Joins 2+ Tables, ORDER BY, LIKE
+*/
+SELECT product.productName, product.price, vendor.vendorName
+FROM product
+INNER JOIN vendor ON product.vendorNum = vendor.vendorNum
+WHERE vendor.vendorName LIKE "Rogue Fitness"
+ORDER BY product.price;
+
+
+/*
+Query shows all products its price that is sold by Rogue Fitness that is between $0.00 and $50.00.  
+Satisfies: Joins 2+ Tables, BETWEEN, AND
+*/
+SELECT product.productName, product.price, vendor.vendorName
+FROM product
+INNER JOIN vendor ON product.vendorNum = vendor.vendorNum
+WHERE product.price BETWEEN 0 AND 50.00 AND vendor.vendorName = "Rogue Fitness";
+
+
+/*
+Query shows all members whose lastnames are Jones or Froning
+Satisfies: IN
+*/
+SELECT * FROM member
+WHERE memberLast IN('Jones', 'Froning');
+
+
+/*
+Query shows all members whose lastnames are Jones or Froning
+Satisfies: OR
+*/
+SELECT * FROM member
+WHERE memberLast = 'Jones' OR 'Froning';
+
+
+/*
+Query shows all different members numbers whose have made purchases
+Satisfies: DISTINCT
+*/
+SELECT DISTINCT memberNum FROM invoice;
+
+
+/*
+Query shows the average number of products customers are likely to buy
+Satisfies: AVG
+*/
+SELECT avg(quantity) FROM  invoice;
+
+
+/*
+Query count the number of members the gym currently has and groups by last name not having more than 4 people with same last name
+Satisfies: COUNT, GROUP BY, HAVING
+*/
+SELECT COUNT(memberNum), memberLast
+FROM  member
+GROUP BY memberLast
+HAVING COUNT(memberNum) < 4;
+
+/*
+Query limits results to first 5 members
+*/
+SELECT * FROM member LIMIT 5;
